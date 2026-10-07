@@ -162,7 +162,7 @@
 <meta name="ext-resource-dependency" content="assets/stat/mr.png" data-resource-id="assets/stat/mr.png" />
 <title>LoL 26.16 → 26.20 改版總覽</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Sans+KR:wght@400;500;700;900&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#0c0f14; --bg2:#131821; --line:#232a36; --fg:#eceae4; --mut:#8b93a1;
@@ -303,372 +303,468 @@ deck-stage section{background:var(--bg);padding:56px 64px 48px;display:flex;flex
 .it.b .itn i{color:var(--b)}.it.n .itn i{color:var(--n)}.it.a .itn i{color:var(--a)}
 .itl{font-size:18px;color:var(--mut);margin-top:2px;line-height:1.35}
 .src{flex:none;margin-top:18px;font-size:18px;color:#6b7381}
+
+/* worlds marker */
+.cover-tl li.wd::before{background:var(--gold);box-shadow:0 0 0 6px oklch(0.80 0.11 85 / .25)}
+.tl-v em,.bl em{font-style:normal;font-family:'Noto Sans TC','Noto Sans KR',sans-serif;font-size:16px;color:#0c0f14;background:var(--gold);padding:1px 7px;border-radius:3px;margin-left:10px;vertical-align:middle;font-weight:700;letter-spacing:.04em}
+.ih.wd span{color:var(--gold)}
+.p-patch .bl.lane{font-family:inherit;font-size:26px;font-weight:700}
+.bl{width:170px}
+.iti.glyph{display:grid;place-items:center;font-family:var(--num);font-weight:700;font-size:20px;color:var(--gold);background:#1e2530}
+/* language */
+body.lang-ko{font-family:'Noto Sans KR','Noto Sans TC',sans-serif}
+body.lang-en .ln2,body.lang-ko .ln2{grid-template-columns:36px 170px 1fr}
+body.lang-en .ln2 .k,body.lang-ko .ln2 .k{font-size:18px}
+body.lang-en .mn,body.lang-ko .mn{font-size:21px}
+body.lang-en .cover-sub{font-size:50px}
+#lang-switch{position:fixed;top:16px;right:16px;z-index:2147483000;display:flex;gap:2px;padding:3px;background:rgba(19,24,33,.92);border:1px solid #2b3340;border-radius:8px;backdrop-filter:blur(8px)}
+#lang-switch button{all:unset;cursor:pointer;font:600 13px/1 'Noto Sans TC','Noto Sans KR',sans-serif;color:#8b93a1;padding:8px 12px;border-radius:5px;letter-spacing:.03em}
+#lang-switch button:hover{color:#eceae4}
+#lang-switch button.on{background:oklch(0.80 0.11 85);color:#0c0f14}
+@media print{#lang-switch{display:none}}
+
 </style>
 </head>
 <body>
 <div id="__splash" style="position:fixed;inset:0;background:#0c0f14;display:flex;align-items:center;justify-content:center;z-index:2147483647;transition:opacity .25s ease"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" data-bg-color="#0c0f14"><rect width="1920" height="1080" fill="#0c0f14"/><rect x="110" y="520" width="400" height="6" fill="#d9b768"/></svg></div><script>(function(){var s=document.getElementById("__splash");if(!s)return;function hide(){s.style.opacity="0";setTimeout(function(){if(s&&s.parentNode)s.parentNode.removeChild(s);},300);}if(document.readyState==="complete")hide();else window.addEventListener("load",hide);})();</script>
 <deck-stage></deck-stage>
-<script>// 26.16 – 26.20 改版資料（數值取自官方中文改版說明；26.20 為官方預覽，Dot Esports 彙整）
+<script>// 26.16 – 26.20 改版資料（數值取自官方中文改版說明；26.20 已依官方正式公告更新）
+// 文字欄位可為字串（三語共用）或 [中文, English, 한국어]
 // d: b=加強 n=削弱 a=調整   lines: [技能/屬性, 改前, 改後, 方向]
 window.PATCHES = [
-  { v: '16', date: '08/12', theme: '下路生態調整', sub: '輔助任務懲罰・ADC 魔防・打野夥伴係數' },
-  { v: '17', date: '08/26', theme: '近戰滾雪球補強', sub: '突破天際再削・犽宿/犽凝/伊瑞莉雅' },
-  { v: '18', date: '09/10', theme: '傳奇殿堂 Caps', sub: '納帝魯斯・巴德・星朵拉削弱' },
-  { v: '19', date: '09/23', theme: '世界賽前微調', sub: '上路傳送 CD 下修・17 位英雄' },
-  { v: '20', date: '10/07', theme: '世界賽指定版本', sub: '官方預覽・火箭腰帶重調', preview: true },
+  { v: '16', date: '08/12', theme: ['下路生態調整', 'Bot Lane Shake-up', '바텀 생태계 조정'] },
+  { v: '17', date: '08/26', theme: ['近戰滾雪球補強', 'Melee Snowball Buffs', '근접 스노우볼 보강'] },
+  { v: '18', date: '09/10', theme: ['傳奇殿堂 Caps', 'Hall of Legends: Caps', '전설의 전당: Caps'] },
+  { v: '19', date: '09/23', theme: ['世界賽前微調', 'Pre-Worlds Tuning', '월즈 전 미세 조정'] },
+  { v: '20', date: '10/07', theme: ['世界賽指定版本', 'Official Worlds Patch', '월드 챔피언십 패치'], worlds: true },
 ];
 
 window.LANES = [
-  { k: 'top', zh: '上路', en: 'TOP' },
-  { k: 'jg', zh: '打野', en: 'JUNGLE' },
-  { k: 'mid', zh: '中路', en: 'MID' },
-  { k: 'bot', zh: '下路', en: 'BOT' },
-  { k: 'sup', zh: '輔助', en: 'SUPPORT' },
+  { k: 'top', zh: '上路', en: 'TOP', ko: '탑' },
+  { k: 'jg', zh: '打野', en: 'JUNGLE', ko: '정글' },
+  { k: 'mid', zh: '中路', en: 'MID', ko: '미드' },
+  { k: 'bot', zh: '下路', en: 'BOT', ko: '바텀' },
+  { k: 'sup', zh: '輔助', en: 'SUPPORT', ko: '서포터' },
 ];
+
+// 共用標籤
+const _ = {
+  ad: ['物攻', 'AD', '공격력'],
+  adg: ['物攻成長', 'AD growth', '레벨당 공격력'],
+  hp: ['生命', 'Health', '체력'],
+  hpg: ['生命成長', 'Health growth', '레벨당 체력'],
+  ar: ['物防', 'Armor', '방어력'],
+  arg: ['物防成長', 'Armor growth', '레벨당 방어력'],
+  mana: ['魔力', 'Mana', '마나'],
+  regen: ['生命回復', 'Health regen', '체력 재생'],
+};
 
 window.CHAMPS = [
   // ───────── 上路 ─────────
-  { id: 'Ambessa', n: '安比薩', lane: 'top', tier: 1, p: {
-    20: { d: 'n', l: [['被動 傷害', '5–30（+25%額外物攻）', '5–25（+20%額外物攻）', 'n']] } } },
-  { id: 'KSante', n: '卡桑帝', lane: 'top', tier: 1, p: {
-    20: { d: 'n', l: [['W 魔力消耗', '40–60', '45–65', 'n'], ['W 減傷（基礎/全力）', '30 / 75%', '25 / 70%', 'n']] } } },
-  { id: 'Nasus', n: '納瑟斯', lane: 'top', tier: 2, p: {
-    16: { d: 'b', l: [['Q 堆層', '3（英雄/大兵/野怪 12）', '4（英雄/大兵/野怪 10）', 'b']] },
-    17: { d: 'n', l: [['被動 普攻吸血', '12 / 18 / 24%', '10 / 15 / 20%', 'n']] },
-    19: { d: 'n', l: [['Q 額外傷害', '40–120', '30–110', 'n']] } } },
-  { id: 'Rumble', n: '藍寶', lane: 'top', tier: 2, p: {
-    19: { d: 'a', l: [['被動 過熱攻速', '50–130%', '30–100%', 'n'], ['被動 對野怪上限', '65–150', '90–175', 'b']] } } },
-  { id: 'Camille', n: '卡蜜兒', lane: 'top', tier: 2, tag: '上/輔', p: {
-    16: { d: 'a', l: [['魔力', '339', '375', 'b'], ['被動 護盾', '20%最大生命', '10/15/20/25%（1/7/13/19級）', 'n'], ['被動 冷卻', '18 / 14 / 10 / 6 秒', '14 / 11 / 8 秒', 'b'], ['W 冷卻', '15–11 秒', '12–10 秒', 'b'], ['W 外圈傷害', '6–8% 最大生命', '7–9% 最大生命', 'b']] } } },
-  { id: 'Mordekaiser', n: '魔鬥凱薩', lane: 'top', tier: 3, p: {
-    20: { d: 'b', l: [['R 冷卻', '140 / 120 / 100 秒', '120 / 110 / 100 秒', 'b'], ['Q 10–20 級成長', '+5 / 級', '+7 / 級', 'b']] } } },
-  { id: 'Kennen', n: '凱能', lane: 'top', tier: 3, p: {
-    16: { d: 'b', l: [['R 額外雙防', '20 / 40 / 60', '25 / 50 / 75', 'b'], ['R 傷害', '40/75/110（+22.5%）', '40/80/120（+25%）', 'b']] },
-    20: { d: 'b', l: [['E 額外攻速', '40–80%', '50–90%', 'b']] } } },
-  { id: 'Poppy', n: '波比', lane: 'top', tier: 3, p: {
-    16: { d: 'a', l: [['物攻', '60', '56', 'n'], ['生命回復', '8', '9', 'b'], ['魔力', '280 + 40/級', '300 + 45/級', 'b'], ['Q 係數', '+100%額外物攻 +9%', '+75%額外物攻 +7–9%', 'n'], ['W 雙防', '12%', '16%', 'b']] },
-    19: { d: 'n', l: [['Q 對士兵/野怪上限', '85–225', '70–210', 'n']] } } },
-  { id: 'Gwen', n: '關', lane: 'top', tier: 3, p: {
-    16: { d: 'b', l: [['被動 對英雄治癒', '50%減傷 最高10–25（+6.5%）', '67%減傷 最高12–40（+7%）', 'b']] } } },
-  { id: 'Irelia', n: '伊瑞莉雅', lane: 'top', tier: 3, p: {
-    17: { d: 'b', l: [['Q 係數', '+70% 物攻', '+80% 物攻', 'b'], ['W 減傷魔攻係數', '7% / 100魔攻', '8% / 100魔攻', 'b'], ['R 魔攻係數', '70%', '100%', 'b']] } } },
-  { id: 'Fiora', n: '菲歐拉', lane: 'top', tier: 3, p: {
-    19: { d: 'b', l: [['生命成長', '99', '105', 'b'], ['R 治療範圍', '550', '600', 'b'], ['R 最大治療', '375/500/625（+300%）', '400/525/650（+350%）', 'b']] } } },
-  { id: 'Aatrox', n: '厄薩斯', lane: 'top', tier: 3, p: {
-    19: { d: 'b', l: [['W 冷卻', '20–12 秒', '18–12 秒', 'b'], ['E 治療係數', '1.1% / 100額外生命', '1.3% / 100額外生命', 'b']] } } },
-  { id: 'Chogath', n: '科加斯', lane: 'top', tier: 3, p: {
-    17: { d: 'b', l: [['E 基礎傷害', '20–100', '30–110', 'b']] } } },
-  { id: 'Trundle', n: '特朗德', lane: 'top', tier: 3, p: {
-    17: { d: 'b', l: [['W 攻速', '30–90%', '30–110%', 'b']] } } },
+  { id: 'Ambessa', n: ['安比薩', 'Ambessa', '암베사'], lane: 'top', tier: 1, p: {
+    20: { d: 'n', l: [[['被動 傷害', 'Passive damage', '패시브 피해량'], '5–30（+25%額外物攻）', '5–25（+20%額外物攻）', 'n']] } } },
+  { id: 'KSante', n: ['卡桑帝', "K'Sante", '크산테'], lane: 'top', tier: 1, p: {
+    20: { d: 'n', l: [[['W 魔力消耗', 'W mana cost', 'W 마나 소모'], '40–60', '45–65', 'n'], [['W 減傷（基礎/全力）', 'W DR (base / all out)', 'W 피해 감소 (기본/최후)'], '30 / 75%', '25 / 70%', 'n']] } } },
+  { id: 'Nasus', n: ['納瑟斯', 'Nasus', '나서스'], lane: 'top', tier: 2, p: {
+    16: { d: 'b', l: [[['Q 堆層', 'Q stacks', 'Q 중첩'], ['3（英雄/大兵/野怪 12）', '3 (12 vs champs / big minions / monsters)', '3 (챔피언·대형 미니언·몬스터 12)'], ['4（英雄/大兵/野怪 10）', '4 (10 vs champs / big minions / monsters)', '4 (챔피언·대형 미니언·몬스터 10)'], 'b']] },
+    17: { d: 'n', l: [[['被動 普攻吸血', 'Passive life steal', '패시브 생명력 흡수'], '12 / 18 / 24%', '10 / 15 / 20%', 'n']] },
+    19: { d: 'n', l: [[['Q 額外傷害', 'Q bonus damage', 'Q 추가 피해량'], '40–120', '30–110', 'n']] } } },
+  { id: 'Rumble', n: ['藍寶', 'Rumble', '럼블'], lane: 'top', tier: 2, p: {
+    19: { d: 'a', l: [[['被動 過熱攻速', 'Passive overheat AS', '패시브 과열 공속'], '50–130%', '30–100%', 'n'], [['被動 對野怪上限', 'Passive monster cap', '패시브 몬스터 상한'], '65–150', '90–175', 'b']] } } },
+  { id: 'Camille', n: ['卡蜜兒', 'Camille', '카밀'], lane: 'top', tier: 2, tag: ['top', 'sup'], p: {
+    16: { d: 'a', l: [[_.mana, '339', '375', 'b'], [['被動 護盾', 'Passive shield', '패시브 보호막'], '20%最大生命', ['10/15/20/25%（1/7/13/19級）', '10/15/20/25% (lv 1/7/13/19)', '10/15/20/25% (1/7/13/19레벨)'], 'n'], [['被動 冷卻', 'Passive cooldown', '패시브 쿨타임'], '18 / 14 / 10 / 6 秒', '14 / 11 / 8 秒', 'b'], [['W 冷卻', 'W cooldown', 'W 쿨타임'], '15–11 秒', '12–10 秒', 'b'], [['W 外圈傷害', 'W outer damage', 'W 바깥쪽 피해'], '6–8% 最大生命', '7–9% 最大生命', 'b']] } } },
+  { id: 'Mordekaiser', n: ['魔鬥凱薩', 'Mordekaiser', '모데카이저'], lane: 'top', tier: 3, p: {
+    20: { d: 'b', l: [[['Q 10–20 級成長', 'Q lv 10–20 scaling', 'Q 10–20레벨 성장'], '+5 / 級', '+7 / 級', 'b'], [['R 冷卻', 'R cooldown', 'R 쿨타임'], '140 / 120 / 100 秒', '120 / 110 / 100 秒', 'b']] } } },
+  { id: 'Kennen', n: ['凱能', 'Kennen', '케넨'], lane: 'top', tier: 3, p: {
+    16: { d: 'b', l: [[['R 額外雙防', 'R bonus resists', 'R 추가 방어력·마저'], '20 / 40 / 60', '25 / 50 / 75', 'b'], [['R 傷害', 'R damage', 'R 피해량'], '40/75/110（+22.5%）', '40/80/120（+25%）', 'b']] },
+    20: { d: 'b', l: [[['E 額外攻速', 'E bonus AS', 'E 추가 공속'], '40–80%', '50–90%', 'b']] } } },
+  { id: 'Poppy', n: ['波比', 'Poppy', '뽀삐'], lane: 'top', tier: 3, p: {
+    16: { d: 'a', l: [[_.ad, '60', '56', 'n'], [_.regen, '8', '9', 'b'], [_.mana, '280 + 40/級', '300 + 45/級', 'b'], [['Q 係數', 'Q ratio', 'Q 계수'], '+100%額外物攻 +9%', '+75%額外物攻 +7–9%', 'n'], [['W 雙防', 'W resists', 'W 방어력·마저'], '12%', '16%', 'b']] },
+    19: { d: 'n', l: [[['Q 對士兵/野怪上限', 'Q minion/monster cap', 'Q 미니언·몬스터 상한'], '85–225', '70–210', 'n']] } } },
+  { id: 'Gwen', n: ['關', 'Gwen', '그웬'], lane: 'top', tier: 3, p: {
+    16: { d: 'b', l: [[['被動 對英雄治癒', 'Passive champ heal', '패시브 챔피언 회복'], ['50%減傷 最高10–25（+6.5%）', '50% eff., max 10–25 (+6.5%)', '50% 효율, 최대 10–25 (+6.5%)'], ['67%減傷 最高12–40（+7%）', '67% eff., max 12–40 (+7%)', '67% 효율, 최대 12–40 (+7%)'], 'b']] } } },
+  { id: 'Irelia', n: ['伊瑞莉雅', 'Irelia', '이렐리아'], lane: 'top', tier: 3, p: {
+    17: { d: 'b', l: [[['Q 係數', 'Q ratio', 'Q 계수'], '+70% 物攻', '+80% 物攻', 'b'], [['W 減傷魔攻係數', 'W DR AP ratio', 'W 피해 감소 AP 계수'], '7% / 100魔攻', '8% / 100魔攻', 'b'], [['R 魔攻係數', 'R AP ratio', 'R AP 계수'], '70%', '100%', 'b']] } } },
+  { id: 'Fiora', n: ['菲歐拉', 'Fiora', '피오라'], lane: 'top', tier: 3, p: {
+    19: { d: 'b', l: [[_.hpg, '99', '105', 'b'], [['R 治療範圍', 'R heal radius', 'R 회복 범위'], '550', '600', 'b'], [['R 最大治療', 'R max heal', 'R 최대 회복'], '375/500/625（+300%）', '400/525/650（+350%）', 'b']] } } },
+  { id: 'Aatrox', n: ['厄薩斯', 'Aatrox', '아트록스'], lane: 'top', tier: 3, p: {
+    19: { d: 'b', l: [[['W 冷卻', 'W cooldown', 'W 쿨타임'], '20–12 秒', '18–12 秒', 'b'], [['E 治療係數', 'E heal ratio', 'E 회복 계수'], '1.1% / 100額外生命', '1.3% / 100額外生命', 'b']] } } },
+  { id: 'Chogath', n: ['科加斯', "Cho'Gath", '초가스'], lane: 'top', tier: 3, p: {
+    17: { d: 'b', l: [[['E 基礎傷害', 'E base damage', 'E 기본 피해량'], '20–100', '30–110', 'b']] } } },
+  { id: 'Trundle', n: ['特朗德', 'Trundle', '트런들'], lane: 'top', tier: 3, p: {
+    17: { d: 'b', l: [[['W 攻速', 'W attack speed', 'W 공격 속도'], '30–90%', '30–110%', 'b']] } } },
 
   // ───────── 打野 ─────────
-  { id: 'Nocturne', n: '夜曲', lane: 'jg', tier: 2, p: {
-    17: { d: 'n', l: [['物防', '38', '36', 'n'], ['生命', '655', '640', 'n']] },
-    19: { d: 'n', l: [['R 冷卻', '140 / 115 / 90 秒', '160 / 130 / 100 秒', 'n']] } } },
-  { id: 'Vi', n: '菲艾', lane: 'jg', tier: 2, p: {
-    19: { d: 'n', l: [['物攻', '63（+3.5/級）', '61（+3.9/級）', 'a'], ['被動 護盾', '12% 最大生命', '10% 最大生命', 'n']] } } },
-  { id: 'Lillia', n: '莉莉亞', lane: 'jg', tier: 3, p: {
-    19: { d: 'b', l: [['物防', '22', '24', 'b'], ['R 沉睡', '2 秒', '2.5 秒', 'b']] },
-    20: { d: 'b', l: [['R 沉睡', '2.5 秒', '2.5 / 2.75 / 3 秒', 'b']] } } },
-  { id: 'MasterYi', n: '易大師', lane: 'jg', tier: 3, p: {
-    18: { d: 'b', l: [['物防成長', '4.5 / 級', '5 / 級', 'b'], ['R 跑速', '35 / 45 / 55%', '40 / 50 / 60%', 'b']] },
-    19: { d: 'b', l: [['Q 命中冷卻返還', '1 秒（隨加速遞減）', '固定 1 秒', 'b']] } } },
-  { id: 'Belveth', n: '貝爾薇斯', lane: 'jg', tier: 3, p: {
-    16: { d: 'n', l: [['生命成長', '110', '105', 'n'], ['R 真實型態攻速', '5 / 15 / 25%', '6 / 13 / 20%', 'n']] } } },
-  { id: 'Graves', n: '葛雷夫', lane: 'jg', tier: 3, p: {
-    17: { d: 'n', l: [['Q 初始係數', '+65% 額外物攻', '+55% 額外物攻', 'n'], ['Q 收回係數', '+55–115%', '+45–105%', 'n']] } } },
-  { id: 'Viego', n: '維爾戈', lane: 'jg', tier: 3, p: {
-    18: { d: 'b', l: [['物攻成長', '3.5', '4', 'b'], ['被動 治癒', '2% 最大生命', '2% + 物攻/魔攻/攻速/生命係數', 'b']] } } },
-  { id: 'Zaahen', n: '薩亨', lane: 'jg', tier: 3, p: {
-    18: { d: 'b', l: [['Q2 傷害', '25–125', '30–150', 'b'], ['Q 冷卻機制', '—', '復活時立即開始計算', 'b']] } } },
-  { id: 'Elise', n: '伊莉絲', lane: 'jg', tier: 3, p: {
-    19: { d: 'b', l: [['被動 魔法傷害', '12 / 22 / 32 / 42', '14 / 24 / 34 / 44', 'b'], ['W 額外攻速', '60–120%', '70–130%', 'b']] } } },
-  { id: 'Khazix', n: '卡力斯', lane: 'jg', tier: 3, p: {
-    19: { d: 'b', l: [['被動 傷害', '17–136', '22–141', 'b'], ['進化 W 緩速', '2 秒', '2.25 秒', 'b'], ['進化 E 距離', '+200', '+300', 'b']] } } },
-  { id: 'Volibear', n: '弗力貝爾', lane: 'jg', tier: 3, p: {
-    19: { d: 'b', l: [['被動 每層攻速', '5%（每100魔攻+3%）', '5%（每100魔攻+4%）', 'b'], ['被動 閃電傷害', '+45% 魔攻', '+45% 魔攻 +20% 額外物攻', 'b']] } } },
-  { id: 'Diana', n: '黛安娜', lane: 'jg', tier: 3, p: {
-    20: { d: 'b', l: [['W 護盾額外生命係數', '11%', '14%', 'b']] } } },
-  { id: 'Kindred', n: '鏡爪', lane: 'jg', tier: 3, p: {
-    20: { d: 'b', l: [['E 緩速', '1 秒', '1.5 秒', 'b'], ['W 野怪傷害', '150%', '165%', 'b']] } } },
+  { id: 'Nocturne', n: ['夜曲', 'Nocturne', '녹턴'], lane: 'jg', tier: 2, p: {
+    17: { d: 'n', l: [[_.ar, '38', '36', 'n'], [_.hp, '655', '640', 'n']] },
+    19: { d: 'n', l: [[['R 冷卻', 'R cooldown', 'R 쿨타임'], '140 / 115 / 90 秒', '160 / 130 / 100 秒', 'n']] } } },
+  { id: 'Vi', n: ['菲艾', 'Vi', '바이'], lane: 'jg', tier: 2, p: {
+    19: { d: 'n', l: [[_.ad, '63（+3.5/級）', '61（+3.9/級）', 'a'], [['被動 護盾', 'Passive shield', '패시브 보호막'], '12% 最大生命', '10% 最大生命', 'n']] } } },
+  { id: 'Lillia', n: ['莉莉亞', 'Lillia', '릴리아'], lane: 'jg', tier: 3, p: {
+    19: { d: 'b', l: [[_.ar, '22', '24', 'b'], [['R 沉睡', 'R sleep', 'R 수면'], '2 秒', '2.5 秒', 'b']] },
+    20: { d: 'b', l: [[['R 沉睡', 'R sleep', 'R 수면'], '2.5 秒', '2.5 / 2.75 / 3 秒', 'b']] } } },
+  { id: 'MasterYi', n: ['易大師', 'Master Yi', '마스터 이'], lane: 'jg', tier: 3, p: {
+    18: { d: 'b', l: [[_.arg, '4.5 / 級', '5 / 級', 'b'], [['R 跑速', 'R move speed', 'R 이동 속도'], '35 / 45 / 55%', '40 / 50 / 60%', 'b']] },
+    19: { d: 'b', l: [[['Q 命中冷卻返還', 'Q on-hit CDR', 'Q 적중 시 쿨감'], ['1 秒（隨加速遞減）', '1s (reduced by haste)', '1초 (가속에 따라 감소)'], '固定 1 秒', 'b']] } } },
+  { id: 'Belveth', n: ['貝爾薇斯', "Bel'Veth", '벨베스'], lane: 'jg', tier: 3, p: {
+    16: { d: 'n', l: [[_.hpg, '110', '105', 'n'], [['R 真實型態攻速', 'R true form AS', 'R 진정한 모습 공속'], '5 / 15 / 25%', '6 / 13 / 20%', 'n']] } } },
+  { id: 'Graves', n: ['葛雷夫', 'Graves', '그레이브즈'], lane: 'jg', tier: 3, p: {
+    17: { d: 'n', l: [[['Q 初始係數', 'Q initial ratio', 'Q 1타 계수'], '+65% 額外物攻', '+55% 額外物攻', 'n'], [['Q 收回係數', 'Q return ratio', 'Q 복귀 계수'], '+55–115%', '+45–105%', 'n']] } } },
+  { id: 'Viego', n: ['維爾戈', 'Viego', '비에고'], lane: 'jg', tier: 3, p: {
+    18: { d: 'b', l: [[_.adg, '3.5', '4', 'b'], [['被動 治癒', 'Passive heal', '패시브 회복'], '2% 最大生命', ['2% + 物攻/魔攻/攻速/生命係數', '2% + AD/AP/AS/HP ratios', '2% + 공격력/주문력/공속/체력 계수'], 'b']] } } },
+  { id: 'Zaahen', n: ['薩亨', 'Zaahen', '자헨'], lane: 'jg', tier: 3, p: {
+    18: { d: 'b', l: [[['Q2 傷害', 'Q2 damage', 'Q2 피해량'], '25–125', '30–150', 'b'], [['Q 冷卻機制', 'Q cooldown rule', 'Q 쿨타임 규칙'], '—', ['復活時立即開始計算', 'Starts on revive', '부활 즉시 시작'], 'b']] } } },
+  { id: 'Elise', n: ['伊莉絲', 'Elise', '엘리스'], lane: 'jg', tier: 3, p: {
+    19: { d: 'b', l: [[['被動 魔法傷害', 'Passive magic dmg', '패시브 마법 피해'], '12 / 22 / 32 / 42', '14 / 24 / 34 / 44', 'b'], [['W 額外攻速', 'W bonus AS', 'W 추가 공속'], '60–120%', '70–130%', 'b']] } } },
+  { id: 'Khazix', n: ['卡力斯', "Kha'Zix", '카직스'], lane: 'jg', tier: 3, p: {
+    19: { d: 'b', l: [[['被動 傷害', 'Passive damage', '패시브 피해량'], '17–136', '22–141', 'b'], [['進化 W 緩速', 'Evolved W slow', '진화 W 둔화'], '2 秒', '2.25 秒', 'b'], [['進化 E 距離', 'Evolved E range', '진화 E 사거리'], '+200', '+300', 'b']] } } },
+  { id: 'Volibear', n: ['弗力貝爾', 'Volibear', '볼리베어'], lane: 'jg', tier: 3, p: {
+    19: { d: 'b', l: [[['被動 每層攻速', 'Passive AS / stack', '패시브 중첩당 공속'], ['5%（每100魔攻+3%）', '5% (+3% per 100 AP)', '5% (주문력 100당 +3%)'], ['5%（每100魔攻+4%）', '5% (+4% per 100 AP)', '5% (주문력 100당 +4%)'], 'b'], [['被動 閃電傷害', 'Passive lightning dmg', '패시브 번개 피해'], '+45% 魔攻', '+45% 魔攻 +20% 額外物攻', 'b']] } } },
+  { id: 'Diana', n: ['黛安娜', 'Diana', '다이애나'], lane: 'jg', tier: 3, p: {
+    20: { d: 'b', l: [[['W 護盾額外生命係數', 'W shield bonus HP ratio', 'W 보호막 추가 체력 계수'], '11%', '14%', 'b']] } } },
+  { id: 'Kindred', n: ['鏡爪', 'Kindred', '킨드레드'], lane: 'jg', tier: 3, p: {
+    20: { d: 'b', l: [[['W 對野怪傷害', 'W monster damage', 'W 몬스터 피해'], '150%', '165%', 'b'], [['E 緩速', 'E slow duration', 'E 둔화 지속'], '1 秒', '1.5 秒', 'b'], [['E 小型野怪鎖定', 'E small monster targeting', 'E 소형 몬스터 지정'], ['啟用', 'Enabled', '가능'], ['移除', 'Removed', '삭제'], 'a']] } } },
 
   // ───────── 中路 ─────────
-  { id: 'Cassiopeia', n: '卡莎碧雅', lane: 'mid', tier: 1, p: {
-    18: { d: 'a', l: [['被動 跑速', '6–40%', '5–36%', 'n'], ['Q 傷害', '75–215（65%）', '65–205（75%）', 'a'], ['E 魔力', '40', '45', 'n'], ['R 傷害', '150/250/350（50%）', '125/225/325（75%）', 'a']] },
-    20: { d: 'n', l: [['基礎生命', '630', '610', 'n'], ['基礎魔力', '480', '450', 'n']] } } },
-  { id: 'Sylas', n: '賽勒斯', lane: 'mid', tier: 1, p: {
-    20: { d: 'x', l: [['預覽改動', '已撤回', '本版不調整', 'x']] } } },
-  { id: 'Syndra', n: '星朵拉', lane: 'mid', tier: 2, p: {
-    18: { d: 'n', l: [['被動 碎片魔力', '20–255', '20–199', 'n'], ['W 冷卻', '12–8 秒', '13–9 秒', 'n']] } } },
-  { id: 'Xerath', n: '齊勒斯', lane: 'mid', tier: 2, p: {
-    17: { d: 'n', l: [['生命', '596', '575', 'n'], ['Q 傷害', '75–235', '70–230', 'n']] } } },
-  { id: 'Ryze', n: '雷茲', lane: 'mid', tier: 2, p: {
-    19: { d: 'a', l: [['物防成長', '4.2', '4.7', 'b'], ['Q 法術湧動加成', '25 / 50 / 75 / 100%', '15 / 40 / 65 / 90%', 'n'], ['E 魔力', '35–75', '40–80', 'n']] } } },
-  { id: 'Azir', n: '阿祈爾', lane: 'mid', tier: 3, p: {
-    16: { d: 'b', l: [['Q 傷害', '60–140', '75–155', 'b']] } } },
-  { id: 'AurelionSol', n: '翱銳龍獸', lane: 'mid', tier: 3, p: {
-    17: { d: 'b', l: [['Q 每秒魔力', '35–55', '30–50', 'b'], ['W 冷卻', '22–16 秒', '22–14 秒', 'b']] } } },
-  { id: 'Leblanc', n: '勒布朗', lane: 'mid', tier: 3, p: {
-    17: { d: 'b', l: [['攻速係數 / 成長', '0.4 / 2.35%', '0.625 / 1.5%', 'a'], ['W / RW 係數', '+80% 魔攻', '+90% 魔攻', 'b']] } } },
-  { id: 'Qiyana', n: '姬亞娜', lane: 'mid', tier: 3, p: {
-    17: { d: 'a', l: [['Q 傷害', '70–190（+85%）', '80–200（+90%）', 'b'], ['Q 對野怪', '175%', '160%', 'n']] } } },
-  { id: 'Yasuo', n: '犽宿', lane: 'mid', tier: 3, p: {
-    17: { d: 'b', l: [['被動 暴擊傷害減免', '-10%', '-5%', 'b']] } } },
-  { id: 'Yone', n: '犽凝', lane: 'mid', tier: 3, p: {
-    17: { d: 'b', l: [['被動 暴擊傷害減免', '-10%', '-5%', 'b']] } } },
-  { id: 'Ekko', n: '艾克', lane: 'mid', tier: 3, p: {
-    18: { d: 'b', l: [['Q 魔力', '50–90', '40–80', 'b'], ['Q 收回係數', '60%', '70%', 'b']] } } },
-  { id: 'Kassadin', n: '卡薩丁', lane: 'mid', tier: 3, p: {
-    18: { d: 'b', l: [['Q 係數', '70% 魔攻', '80% 魔攻', 'b'], ['R 基礎傷害', '70 / 90 / 110', '80 / 95 / 110', 'b']] } } },
-  { id: 'Aurora', n: '歐羅拉', lane: 'mid', tier: 3, p: {
-    19: { d: 'b', l: [['E 基礎傷害', '70–230', '80–240', 'b'], ['R 裂隙持續', '1.75 / 2.5 / 3.25 秒', '2.25 / 2.75 / 3.25 秒', 'b']] } } },
-  { id: 'Swain', n: '斯溫', lane: 'mid', tier: 3, p: {
-    20: { d: 'b', l: [['魔防 / 物防', '31 / 25', '34 / 23', 'a'], ['W 傷害', '70–210', '70–250', 'b'], ['W 冷卻', '22–18 秒', '20–16 秒', 'b']] } } },
+  { id: 'Cassiopeia', n: ['卡莎碧雅', 'Cassiopeia', '카시오페아'], lane: 'mid', tier: 1, p: {
+    18: { d: 'a', l: [[['被動 跑速', 'Passive move speed', '패시브 이동 속도'], '6–40%', '5–36%', 'n'], [['Q 傷害', 'Q damage', 'Q 피해량'], '75–215（65%）', '65–205（75%）', 'a'], [['E 魔力', 'E mana', 'E 마나'], '40', '45', 'n'], [['R 傷害', 'R damage', 'R 피해량'], '150/250/350（50%）', '125/225/325（75%）', 'a']] },
+    20: { d: 'n', l: [[['基礎生命', 'Base health', '기본 체력'], '630', '610', 'n'], [['基礎魔力', 'Base mana', '기본 마나'], '480', '450', 'n']] } } },
+  { id: 'Syndra', n: ['星朵拉', 'Syndra', '신드라'], lane: 'mid', tier: 2, p: {
+    18: { d: 'n', l: [[['被動 碎片魔力', 'Passive splinter AP', '패시브 파편 주문력'], '20–255', '20–199', 'n'], [['W 冷卻', 'W cooldown', 'W 쿨타임'], '12–8 秒', '13–9 秒', 'n']] } } },
+  { id: 'Xerath', n: ['齊勒斯', 'Xerath', '제라스'], lane: 'mid', tier: 2, p: {
+    17: { d: 'n', l: [[_.hp, '596', '575', 'n'], [['Q 傷害', 'Q damage', 'Q 피해량'], '75–235', '70–230', 'n']] } } },
+  { id: 'Ryze', n: ['雷茲', 'Ryze', '라이즈'], lane: 'mid', tier: 2, p: {
+    19: { d: 'a', l: [[_.arg, '4.2', '4.7', 'b'], [['Q 法術湧動加成', 'Q Flux bonus', 'Q 주문 쇄도 추가'], '25 / 50 / 75 / 100%', '15 / 40 / 65 / 90%', 'n'], [['E 魔力', 'E mana', 'E 마나'], '35–75', '40–80', 'n']] } } },
+  { id: 'Azir', n: ['阿祈爾', 'Azir', '아지르'], lane: 'mid', tier: 3, p: {
+    16: { d: 'b', l: [[['Q 傷害', 'Q damage', 'Q 피해량'], '60–140', '75–155', 'b']] } } },
+  { id: 'AurelionSol', n: ['翱銳龍獸', 'Aurelion Sol', '아우렐리온 솔'], lane: 'mid', tier: 3, p: {
+    17: { d: 'b', l: [[['Q 每秒魔力', 'Q mana / sec', 'Q 초당 마나'], '35–55', '30–50', 'b'], [['W 冷卻', 'W cooldown', 'W 쿨타임'], '22–16 秒', '22–14 秒', 'b']] } } },
+  { id: 'Leblanc', n: ['勒布朗', 'LeBlanc', '르블랑'], lane: 'mid', tier: 3, p: {
+    17: { d: 'b', l: [[['攻速係數 / 成長', 'AS ratio / growth', '공속 계수 / 성장'], '0.4 / 2.35%', '0.625 / 1.5%', 'a'], [['W / RW 係數', 'W / RW ratio', 'W / RW 계수'], '+80% 魔攻', '+90% 魔攻', 'b']] } } },
+  { id: 'Qiyana', n: ['姬亞娜', 'Qiyana', '키아나'], lane: 'mid', tier: 3, p: {
+    17: { d: 'a', l: [[['Q 傷害', 'Q damage', 'Q 피해량'], '70–190（+85%）', '80–200（+90%）', 'b'], [['Q 對野怪', 'Q vs monsters', 'Q 몬스터 대상'], '175%', '160%', 'n']] } } },
+  { id: 'Yasuo', n: ['犽宿', 'Yasuo', '야스오'], lane: 'mid', tier: 3, p: {
+    17: { d: 'b', l: [[['被動 暴擊傷害減免', 'Passive crit dmg penalty', '패시브 치명타 피해 감소'], '-10%', '-5%', 'b']] } } },
+  { id: 'Yone', n: ['犽凝', 'Yone', '요네'], lane: 'mid', tier: 3, p: {
+    17: { d: 'b', l: [[['被動 暴擊傷害減免', 'Passive crit dmg penalty', '패시브 치명타 피해 감소'], '-10%', '-5%', 'b']] } } },
+  { id: 'Ekko', n: ['艾克', 'Ekko', '에코'], lane: 'mid', tier: 3, p: {
+    18: { d: 'b', l: [[['Q 魔力', 'Q mana', 'Q 마나'], '50–90', '40–80', 'b'], [['Q 收回係數', 'Q return ratio', 'Q 복귀 계수'], '60%', '70%', 'b']] } } },
+  { id: 'Kassadin', n: ['卡薩丁', 'Kassadin', '카사딘'], lane: 'mid', tier: 3, p: {
+    18: { d: 'b', l: [[['Q 係數', 'Q ratio', 'Q 계수'], '70% 魔攻', '80% 魔攻', 'b'], [['R 基礎傷害', 'R base damage', 'R 기본 피해량'], '70 / 90 / 110', '80 / 95 / 110', 'b']] } } },
+  { id: 'Aurora', n: ['歐羅拉', 'Aurora', '오로라'], lane: 'mid', tier: 3, p: {
+    19: { d: 'b', l: [[['E 基礎傷害', 'E base damage', 'E 기본 피해량'], '70–230', '80–240', 'b'], [['R 裂隙持續', 'R rift duration', 'R 균열 지속'], '1.75 / 2.5 / 3.25 秒', '2.25 / 2.75 / 3.25 秒', 'b']] } } },
+  { id: 'Swain', n: ['斯溫', 'Swain', '스웨인'], lane: 'mid', tier: 3, p: {
+    20: { d: 'b', l: [[['魔防 / 物防', 'MR / Armor', '마저 / 방어력'], '31 / 25', '34 / 23', 'a'], [['W 傷害', 'W damage', 'W 피해량'], '70–210', '70–250', 'b'], [['W 冷卻', 'W cooldown', 'W 쿨타임'], '22–18 秒', '20–16 秒', 'b']] } } },
 
   // ───────── 下路 ─────────
-  { id: 'Vayne', n: '汎', lane: 'bot', tier: 1, tag: '下/上', p: {
-    17: { d: 'n', l: [['生命', '550 + 103/級', '580 + 98/級', 'a'], ['攻速係數', '0.658 + 3.3%/級', '0.67 + 2.8%/級', 'n'], ['Q 魔力', '30', '46–30', 'n'], ['W 真實傷害', '6–10%', '4–10%', 'n']] },
-    20: { d: 'b', l: [['生命回復', '4 + 0.5/級', '5.5 + 0.4/級', 'b'], ['Q 魔力', '46–30', '30', 'b']] } } },
-  { id: 'Yunara', n: '尤娜拉', lane: 'bot', tier: 1, p: {
-    20: { d: 'n', l: [['Q 被動/主動 命中傷害', '5–25（+20%）', '3–23（+20%）', 'n']] } } },
-  { id: 'Lucian', n: '路西恩', lane: 'bot', tier: 1, p: {
-    19: { d: 'a', l: [['被動 強化命中', '15（+20% 物攻）', '5（+15% 物攻）', 'n'], ['Q 基礎傷害', '80–220', '90–250', 'b']] },
-    20: { d: 'b', l: [['物攻成長', '2.5 / 級', '2.9 / 級', 'b']] } } },
-  { id: 'Ashe', n: '艾希', lane: 'bot', tier: 2, p: {
-    20: { d: 'n', l: [['物攻成長', '3.5 / 級', '3 / 級', 'n']] } } },
-  { id: 'Zeri', n: '婕莉', lane: 'bot', tier: 2, p: {
-    18: { d: 'n', l: [['W 係數', '+120% 總物攻', '+100% 總物攻', 'n'], ['W 穿牆係數', '+180% 總物攻', '+150% 總物攻', 'n']] } } },
-  { id: 'Varus', n: '法洛士', lane: 'bot', tier: 2, p: {
-    20: { d: 'x', l: [['預覽削弱', '已撤回', '本版不調整', 'x']] } } },
-  { id: 'Aphelios', n: '亞菲利歐', lane: 'bot', tier: 3, p: {
-    19: { d: 'b', l: [['通碧 狙擊傷害', '70–160', '80–170', 'b'], ['赤月 治療', '2–7.1%', '2–8%', 'b'], ['熾焰 Q 冷卻', '9–6 秒', '8–5 秒', 'b']] } } },
-  { id: 'Draven', n: '達瑞文', lane: 'bot', tier: 3, p: {
-    19: { d: 'b', l: [['物攻', '62', '64', 'b']] } } },
-  { id: 'Smolder', n: '史矛德', lane: 'bot', tier: 3, p: {
-    20: { d: 'b', l: [['被動 超級灼熱加成', '25–55%', '25–60%', 'b'], ['被動 振翅加成', '8–12.8%', '8–14%', 'b'], ['R 自我治療', '100–170（+50%）', '100–250（+75%）', 'b']] } } },
+  { id: 'Vayne', n: ['汎', 'Vayne', '베인'], lane: 'bot', tier: 1, tag: ['bot', 'top'], p: {
+    17: { d: 'n', l: [[_.hp, '550 + 103/級', '580 + 98/級', 'a'], [['攻速係數', 'AS ratio', '공속 계수'], '0.658 + 3.3%/級', '0.67 + 2.8%/級', 'n'], [['Q 魔力', 'Q mana', 'Q 마나'], '30', '46–30', 'n'], [['W 真實傷害', 'W true damage', 'W 고정 피해'], '6–10%', '4–10%', 'n']] },
+    20: { d: 'b', l: [[_.regen, '4 + 0.5/級', '5.5 + 0.4/級', 'b'], [['Q 魔力', 'Q mana', 'Q 마나'], '46–30', '30', 'b']] } } },
+  { id: 'Yunara', n: ['尤娜拉', 'Yunara', '유나라'], lane: 'bot', tier: 1, p: {
+    20: { d: 'n', l: [[['Q 被動/主動 命中傷害', 'Q passive/active on-hit', 'Q 패시브/액티브 적중 피해'], '5–25（+20%魔攻）', '3–23（+20%魔攻）', 'n'], [['W 緩速疊加', 'W slow stacking', 'W 둔화 중첩'], ['可與其他緩速疊加', 'Stacks with other slows', '다른 둔화와 중첩'], ['不再疊加', 'No longer stacks', '더 이상 중첩 안 됨'], 'n']] } } },
+  { id: 'Lucian', n: ['路西恩', 'Lucian', '루시안'], lane: 'bot', tier: 1, p: {
+    19: { d: 'a', l: [[['被動 強化命中', 'Passive empowered hit', '패시브 강화 공격'], '15（+20% 物攻）', '5（+15% 物攻）', 'n'], [['Q 基礎傷害', 'Q base damage', 'Q 기본 피해량'], '80–220', '90–250', 'b']] },
+    20: { d: 'b', l: [[_.adg, '2.5 / 級', '2.9 / 級', 'b']] } } },
+  { id: 'Ashe', n: ['艾希', 'Ashe', '애쉬'], lane: 'bot', tier: 2, p: {
+    20: { d: 'n', l: [[_.adg, '3.5 / 級', '3 / 級', 'n']] } } },
+  { id: 'Zeri', n: ['婕莉', 'Zeri', '제리'], lane: 'bot', tier: 2, p: {
+    18: { d: 'n', l: [[['W 係數', 'W ratio', 'W 계수'], '+120% 總物攻', '+100% 總物攻', 'n'], [['W 穿牆係數', 'W through-wall ratio', 'W 벽 관통 계수'], '+180% 總物攻', '+150% 總物攻', 'n']] } } },
+  { id: 'Aphelios', n: ['亞菲利歐', 'Aphelios', '아펠리오스'], lane: 'bot', tier: 3, p: {
+    19: { d: 'b', l: [[['通碧 狙擊傷害', 'Calibrum snipe dmg', '칼리브럼 저격 피해'], '70–160', '80–170', 'b'], [['赤月 治療', 'Severum heal', '세베룸 회복'], '2–7.1%', '2–8%', 'b'], [['熾焰 Q 冷卻', 'Infernum Q cooldown', '인페르눔 Q 쿨타임'], '9–6 秒', '8–5 秒', 'b']] } } },
+  { id: 'Draven', n: ['達瑞文', 'Draven', '드레이븐'], lane: 'bot', tier: 3, p: {
+    19: { d: 'b', l: [[_.ad, '62', '64', 'b']] } } },
+  { id: 'Smolder', n: ['史矛德', 'Smolder', '스몰더'], lane: 'bot', tier: 3, p: {
+    20: { d: 'b', l: [[['被動 激灼龍息加成', 'Passive Super Scorcher bonus', '패시브 초강력 불꽃 추가'], '25–55%', '25–60%', 'b'], [['被動 振翼高飛加成', 'Passive Flap bonus', '패시브 날갯짓 추가'], '8–12.8%', '8–14%', 'b'], [['R 自身治療', 'R self heal', 'R 자가 회복'], '100–170（+50%額外物攻）', '100–250（+75%額外物攻）', 'b']] } } },
 
   // ───────── 輔助 ─────────
-  { id: 'Nautilus', n: '納帝魯斯', lane: 'sup', tier: 2, p: {
-    18: { d: 'n', l: [['物攻', '61', '58', 'n'], ['Q 傷害', '85–265', '85–245', 'n']] } } },
-  { id: 'Bard', n: '巴德', lane: 'sup', tier: 2, p: {
-    18: { d: 'n', l: [['物防', '34 + 5/級', '32 + 4.7/級', 'n']] } } },
-  { id: 'Thresh', n: '瑟雷西', lane: 'sup', tier: 2, p: {
-    17: { d: 'n', l: [['E 主動傷害', '75–255（+70%）', '65–245（+60%）', 'n']] } } },
-  { id: 'Seraphine', n: '瑟菈紛', lane: 'sup', tier: 2, p: {
-    18: { d: 'n', l: [['E 冷卻', '11–9 秒', '固定 11 秒', 'n']] } } },
-  { id: 'Neeko', n: '妮可', lane: 'sup', tier: 3, p: {
-    20: { d: 'b', l: [['E 基礎傷害', '70–210', '80–220', 'b'], ['E 強化定身', '1.8–3 秒', '2–3 秒', 'b']] } } },
-  { id: 'TahmKench', n: '貪啃奇', lane: 'sup', tier: 3, p: {
-    20: { d: 'b', l: [['Q 基礎治療', '10–25', '10–50', 'b']] } } },
+  { id: 'Nautilus', n: ['納帝魯斯', 'Nautilus', '노틸러스'], lane: 'sup', tier: 2, p: {
+    18: { d: 'n', l: [[_.ad, '61', '58', 'n'], [['Q 傷害', 'Q damage', 'Q 피해량'], '85–265', '85–245', 'n']] } } },
+  { id: 'Bard', n: ['巴德', 'Bard', '바드'], lane: 'sup', tier: 2, p: {
+    18: { d: 'n', l: [[_.ar, '34 + 5/級', '32 + 4.7/級', 'n']] } } },
+  { id: 'Thresh', n: ['瑟雷西', 'Thresh', '쓰레쉬'], lane: 'sup', tier: 2, p: {
+    17: { d: 'n', l: [[['E 主動傷害', 'E active damage', 'E 액티브 피해'], '75–255（+70%）', '65–245（+60%）', 'n']] } } },
+  { id: 'Seraphine', n: ['瑟菈紛', 'Seraphine', '세라핀'], lane: 'sup', tier: 2, p: {
+    18: { d: 'n', l: [[['E 冷卻', 'E cooldown', 'E 쿨타임'], '11–9 秒', '固定 11 秒', 'n']] } } },
+  { id: 'Neeko', n: ['妮可', 'Neeko', '니코'], lane: 'sup', tier: 3, p: {
+    20: { d: 'b', l: [[['E 基礎傷害', 'E base damage', 'E 기본 피해량'], '70–210', '80–220', 'b'], [['E 強化定身', 'E empowered root', 'E 강화 속박'], '1.8–3 秒', '2–3 秒', 'b']] } } },
+  { id: 'TahmKench', n: ['貪啃奇', 'Tahm Kench', '탐 켄치'], lane: 'sup', tier: 3, p: {
+    20: { d: 'b', l: [[['Q 基礎治療', 'Q base heal', 'Q 기본 회복'], '10–25', '10–50', 'b']] } } },
 ];
 
 window.ITEMS = [
-  { v: '16', n: '狂戰士護脛', img: 'assets/item/3006.png', d: 'b', l: '攻速 25% ⇒ 30%' },
-  { v: '16', n: '黑色切割者', img: 'assets/item/3071.png', d: 'a', l: '物攻 40 ⇒ 45・狂熱跑速 遠程 20 ⇒ 10' },
-  { v: '16', n: '日蝕', img: 'assets/item/6692.png', d: 'b', l: '傷害 近6% / 遠4% ⇒ 近8% / 遠5%' },
-  { v: '16', n: '芮蘭颶風箭', img: 'assets/item/3085.png', d: 'b', l: '跑速 4% ⇒ 5%・箭矢 55% ⇒ 65% 物攻' },
-  { v: '16', n: '史特拉克手套', img: 'assets/item/3053.png', d: 'b', l: '額外物攻 45% ⇒ 50% 基礎物攻' },
-  { v: '16', n: '突破天際', img: 'assets/item/6610.png', d: 'n', l: '治療 近戰 100%+6% ⇒ 90%+4%・生命 400 ⇒ 450' },
-  { v: '16', n: '日炎斗篷', img: 'assets/item/3068.png', d: 'a', l: '傷害 +1% ⇒ +1.5% 額外生命・合成 600 ⇒ 700' },
-  { v: '16', n: '鎖鏈軍靴', img: 'assets/item/3173.png', d: 'n', l: '魔防 30 ⇒ 25' },
-  { v: '16', n: '魔法使之鞋', img: 'assets/item/3175.png', d: 'b', l: '魔法穿透 18 ⇒ 20 (+8%)' },
-  { v: '16', n: '刀鋒之雹', img: 'assets/item/HailOfBlades.png', d: 'n', l: '近戰攻速 120% ⇒ 90%' },
-  { v: '16', n: 'ADC 魔防', img: 'assets/stat/mr.png', d: 'b', l: '30 + 1.3/級 ⇒ 33 + 1.1/級' },
-  { v: '16', n: '輔助任務', img: 'assets/item/3865.png', d: 'n', l: '非下路懲罰 3等前 -25% ⇒ 5等前 -33%' },
-  { v: '17', n: '狂暴利刃', img: 'assets/item/3095.png', d: 'b', l: '攻速 20% ⇒ 25%' },
-  { v: '17', n: '突破天際', img: 'assets/item/6610.png', d: 'n', l: '生命 450 ⇒ 400・物攻 45 ⇒ 40' },
-  { v: '18', n: '鬼索的狂暴之刃', img: 'assets/item/3124.png', d: 'b', l: '沸騰打擊層數持續 3 ⇒ 4 秒' },
-  { v: '19', n: '世界地圖', img: 'assets/item/3865.png', d: 'a', l: '生命 30/100/200 ⇒ 0/60/200' },
-  { v: '19', n: '上路傳送', img: 'assets/item/SummonerTeleport.png', d: 'b', l: '免費傳送 CD 420 ⇒ 390 秒' },
-  { v: '20', n: '海克斯科技火箭腰帶', img: 'assets/item/3152.png', d: 'a', l: '技能加速 20 ⇒ 10・主動 100(+10%) ⇒ 135(+15%)' },
-  { v: '20', n: '實驗性海克斯板', img: 'assets/item/3073.png', d: 'n', l: '遠程效果 70% ⇒ 50%' },
-  { v: '20', n: '芮蘭颶風箭', img: 'assets/item/3085.png', d: 'n', l: '箭矢 65% ⇒ 60% 物攻' },
+  { v: '16', img: 'assets/item/3006.png', d: 'b', n: ['狂戰士護脛', "Berserker's Greaves", '광전사의 군화'], l: ['攻速 25% ⇒ 30%', 'AS 25% ⇒ 30%', '공격 속도 25% ⇒ 30%'] },
+  { v: '16', img: 'assets/item/3071.png', d: 'a', n: ['黑色切割者', 'Black Cleaver', '칠흑의 양날 도끼'], l: ['物攻 40 ⇒ 45・狂熱跑速 遠程 20 ⇒ 10', 'AD 40 ⇒ 45 · Ranged Fervor MS 20 ⇒ 10', '공격력 40 ⇒ 45 · 원거리 열정 이속 20 ⇒ 10'] },
+  { v: '16', img: 'assets/item/6692.png', d: 'b', n: ['日蝕', 'Eclipse', '월식'], l: ['傷害 近6% / 遠4% ⇒ 近8% / 遠5%', 'Dmg melee 6% / ranged 4% ⇒ 8% / 5%', '피해 근접 6% / 원거리 4% ⇒ 8% / 5%'] },
+  { v: '16', img: 'assets/item/3085.png', d: 'b', n: ['芮蘭颶風箭', "Runaan's Hurricane", '루난의 허리케인'], l: ['跑速 4% ⇒ 5%・箭矢 55% ⇒ 65% 物攻', 'MS 4% ⇒ 5% · Bolts 55% ⇒ 65% AD', '이속 4% ⇒ 5% · 화살 공격력 55% ⇒ 65%'] },
+  { v: '16', img: 'assets/item/3053.png', d: 'b', n: ['史特拉克手套', "Sterak's Gage", '스테락의 도전'], l: ['額外物攻 45% ⇒ 50% 基礎物攻', 'Bonus AD 45% ⇒ 50% base AD', '추가 공격력 기본 공격력의 45% ⇒ 50%'] },
+  { v: '16', img: 'assets/item/6610.png', d: 'n', n: ['突破天際', 'Sundered Sky', '갈라진 하늘'], l: ['治療 近戰 100%+6% ⇒ 90%+4%・生命 400 ⇒ 450', 'Melee heal 100%+6% ⇒ 90%+4% · HP 400 ⇒ 450', '근접 회복 100%+6% ⇒ 90%+4% · 체력 400 ⇒ 450'] },
+  { v: '16', img: 'assets/item/3068.png', d: 'a', n: ['日炎斗篷', 'Sunfire Aegis', '태양불꽃 방패'], l: ['傷害 +1% ⇒ +1.5% 額外生命・合成 600 ⇒ 700', 'Dmg +1% ⇒ +1.5% bonus HP · Combine 600 ⇒ 700', '피해 추가 체력 +1% ⇒ +1.5% · 조합 600 ⇒ 700'] },
+  { v: '16', img: 'assets/item/3173.png', d: 'n', n: ['鎖鏈軍靴', 'Chainlaced Crushers', '사슬 분쇄화'], l: ['魔防 30 ⇒ 25', 'MR 30 ⇒ 25', '마법 저항력 30 ⇒ 25'] },
+  { v: '16', img: 'assets/item/3175.png', d: 'b', n: ['魔法使之鞋', "Sorcerer's Shoes", '마법사의 신발'], l: ['魔法穿透 18 ⇒ 20 (+8%)', 'Magic pen 18 ⇒ 20 (+8%)', '마법 관통력 18 ⇒ 20 (+8%)'] },
+  { v: '16', img: 'assets/item/HailOfBlades.png', d: 'n', n: ['刀鋒之雹', 'Hail of Blades', '칼날비'], l: ['近戰攻速 120% ⇒ 90%', 'Melee AS 120% ⇒ 90%', '근접 공격 속도 120% ⇒ 90%'] },
+  { v: '16', img: 'assets/stat/mr.png', d: 'b', n: ['ADC 魔防', 'ADC Magic Resist', '원거리 딜러 마법 저항력'], l: ['30 + 1.3/級 ⇒ 33 + 1.1/級', '30 + 1.3/lv ⇒ 33 + 1.1/lv', '30 + 1.3/레벨 ⇒ 33 + 1.1/레벨'] },
+  { v: '16', img: 'assets/item/3865.png', d: 'n', n: ['輔助任務', 'Support Quest', '서포터 퀘스트'], l: ['非下路懲罰 3等前 -25% ⇒ 5等前 -33%', 'Off-lane penalty pre-lv3 -25% ⇒ pre-lv5 -33%', '바텀 외 페널티 3레벨 전 -25% ⇒ 5레벨 전 -33%'] },
+  { v: '17', img: 'assets/item/3095.png', d: 'b', n: ['狂暴利刃', 'Stormrazor', '폭풍갈퀴'], l: ['攻速 20% ⇒ 25%', 'AS 20% ⇒ 25%', '공격 속도 20% ⇒ 25%'] },
+  { v: '17', img: 'assets/item/6610.png', d: 'n', n: ['突破天際', 'Sundered Sky', '갈라진 하늘'], l: ['生命 450 ⇒ 400・物攻 45 ⇒ 40', 'HP 450 ⇒ 400 · AD 45 ⇒ 40', '체력 450 ⇒ 400 · 공격력 45 ⇒ 40'] },
+  { v: '18', img: 'assets/item/3124.png', d: 'b', n: ['鬼索的狂暴之刃', "Guinsoo's Rageblade", '구인수의 격노검'], l: ['沸騰打擊層數持續 3 ⇒ 4 秒', 'Seething Strike stacks 3 ⇒ 4s', '끓어오르는 공격 중첩 3 ⇒ 4초'] },
+  { v: '19', img: 'assets/item/3865.png', d: 'a', n: ['世界地圖', 'World Atlas', '세계 지도'], l: ['生命 30/100/200 ⇒ 0/60/200', 'HP 30/100/200 ⇒ 0/60/200', '체력 30/100/200 ⇒ 0/60/200'] },
+  { v: '19', img: 'assets/item/SummonerTeleport.png', d: 'b', n: ['上路傳送', 'Top Lane Teleport', '탑 순간이동'], l: ['免費傳送 CD 420 ⇒ 390 秒', 'Free TP CD 420 ⇒ 390s', '무료 순간이동 쿨타임 420 ⇒ 390초'] },
+  { v: '20', img: 'assets/item/3152.png', d: 'a', n: ['海克斯科技火箭腰帶', 'Hextech Rocketbelt', '마법공학 로켓 벨트'], l: ['技能加速 20 ⇒ 10・主動 100(+10%魔攻) ⇒ 135(+15%魔攻)', 'AH 20 ⇒ 10 · Active 100 (+10% AP) ⇒ 135 (+15% AP)', '스킬 가속 20 ⇒ 10 · 사용 효과 100(+10% AP) ⇒ 135(+15% AP)'] },
+  { v: '20', img: 'assets/item/3073.png', d: 'n', n: ['實驗性海克斯板', 'Experimental Hexplate', '실험적 마공학판'], l: ['遠程效果 70% ⇒ 50%（攻速 25%・跑速 10%）', 'Ranged 70% ⇒ 50% (25% AS · 10% MS)', '원거리 효율 70% ⇒ 50% (공속 25% · 이속 10%)'] },
+  { v: '20', img: 'assets/item/3085.png', d: 'n', n: ['芮蘭颶風箭', "Runaan's Hurricane", '루난의 허리케인'], l: ['箭矢 65% ⇒ 60% 物攻', 'Bolts 65% ⇒ 60% AD', '화살 공격력 65% ⇒ 60%'] },
+  { v: '20', img: null, glyph: 'SB', d: 'a', n: ['計分板調整', 'Scoreboard', '점수판 조정'], l: ['隱藏 15 件道具的疊層計數，只保留戰術性數字', 'Hides stack counters on 15 items; tactical counters stay', '아이템 15종 중첩 수 숨김, 전술적 수치만 유지'] },
+  { v: '20', img: null, glyph: 'RP', d: 'a', n: ['私人重播', 'Private Replays', '비공개 리플레이'], l: ['只能觀看自己參與的對戰；第三方無法下載', 'Only your own games; third parties blocked', '본인 참여 게임만 시청 가능, 서드파티 차단'] },
 ];
 </script>
-<script>window.buildDeck = function () {
-  const RES = p => (window.__resources && window.__resources[p]) || p;
-  const P = window.PATCHES, L = window.LANES, C = window.CHAMPS, I = window.ITEMS;
-  const VS = P.map(p => p.v);
+<script>// 三語（繁中 / English / 한국어）建置。buildDeck(lang) 可重複呼叫切換語言。
+(function () {
+  const LANGS = ['zh', 'en', 'ko'];
+  const LI = { zh: 0, en: 1, ko: 2 };
+  const LKEY = 'lol-digest.lang';
+
+  const UI = {
+    kickerCover: ['LEAGUE OF LEGENDS ・ PATCH DIGEST', 'LEAGUE OF LEGENDS ・ PATCH DIGEST', 'LEAGUE OF LEGENDS ・ PATCH DIGEST'],
+    coverSub: ['世界賽五版本英雄數值改動總覽', 'Road to Worlds — 5 Patches of Balance Changes', '월즈로 가는 5개 패치 밸런스 총정리'],
+    champs: ['位英雄', 'champions', '챔피언'],
+    items: ['項裝備／系統', 'items / systems', '아이템 / 시스템'],
+    patches: ['個版本', 'patches', '패치'],
+    matrixK: 'ONE-PAGE MATRIX', matrix: ['全英雄 × 版本 一張圖', 'All Champions × Patches', '전체 챔피언 × 패치 한눈에'],
+    statsK: 'STATISTICS', stats: ['改動統計', 'Change Statistics', '변경 통계'],
+    perPatch: ['各版本英雄改動數', 'Champion changes per patch', '패치별 챔피언 변경 수'],
+    perLane: ['各路線改動次數', 'Changes per role', '포지션별 변경 횟수'],
+    totalChanges: ['次英雄改動', 'champion changes', '챔피언 변경'],
+    multi: ['跨版本連續調整', 'Changed in multiple patches', '여러 패치에 걸쳐 조정'],
+    b: ['加強', 'Buff', '상향'], n: ['削弱', 'Nerf', '하향'], a: ['調整', 'Adjust', '조정'], amix: ['有增有減', 'Mixed', '상·하향 혼합'],
+    t1: ['第一優先', 'Priority 1', '1순위'], t2: ['第二優先', 'Priority 2', '2순위'], t3: ['第三優先', 'Priority 3', '3순위'],
+    worlds: ['世界賽', 'WORLDS', '월즈'],
+    t1K: 'WORLDS PRIORITY', t1T: ['第一優先・世界賽 BP 核心角色', 'Priority 1 · Worlds Pick/Ban Core', '1순위 · 월즈 밴픽 핵심 챔피언'],
+    laneT: ['・逐版本數值', ' · Patch-by-Patch', ' · 패치별 수치'],
+    itemsK: 'ITEMS & SYSTEMS', itemsT: ['裝備・符文・系統', 'Items · Runes · Systems', '아이템 · 룬 · 시스템'],
+    src: [
+      '資料來源：英雄聯盟官方 26.16–26.20 中文版本更新公告。26.20 為 2026 世界大賽正式比賽版本（10/07 上線）；僅收錄召喚峽谷競技相關內容，大混戰、經典模式等其他模式不列入。',
+      'Source: official League of Legends patch notes 26.16–26.20. 26.20 is the official 2026 Worlds patch (live 10/07). Summoner’s Rift competitive changes only — ARAM, Classic Mode and other modes are excluded.',
+      '출처: 리그 오브 레전드 공식 26.16–26.20 패치 노트. 26.20은 2026 월드 챔피언십 공식 패치(10/07 적용). 소환사의 협곡 경쟁전 관련 내용만 수록하며 칼바람, 클래식 모드 등 기타 모드는 제외.'],
+    cover: ['封面', 'Cover', '표지'], matrixL: ['一張圖總表', 'Matrix', '총표'], statsL: ['統計', 'Stats', '통계'], itemsL: ['裝備系統', 'Items', '아이템'],
+  };
+
+  // 數值字串中的中文詞 → 英 / 韓
+  const VAL = [
+    ['（', ' (', ' ('], ['）', ')', ')'],
+    ['100額外生命', '100 bonus HP', '추가 체력 100'], ['100魔攻', '100 AP', 'AP 100'],
+    ['額外物攻', 'bonus AD', '추가 AD'], ['總物攻', 'total AD', '총 AD'],
+    ['最大生命', 'max HP', '최대 체력'], ['額外生命', 'bonus HP', '추가 체력'],
+    ['魔攻', 'AP', 'AP'], ['物攻', 'AD', 'AD'], ['固定 ', 'flat ', '고정 '],
+    [' 秒', 's', '초'], ['秒', 's', '초'], ['/級', '/lv', '/레벨'], ['級', 'lv', '레벨'],
+  ];
   const ARW = { b: '▲', n: '▼', a: '◆', x: '✕' };
-  const DZ = { b: '加強', n: '削弱', a: '調整', x: '撤回' };
-  const TIERZ = { 1: '第一優先', 2: '第二優先', 3: '第三優先' };
-  const img = id => RES(`assets/champ/${id}.png`);
-  const STAT = [['魔防','mr'],['物防','armor'],['攻速','as'],['生命回復','hp'],['生命','hp'],['魔力','mana'],['物攻','ad']];
-  const lineIcon = (cid, label) => {
-    const t = label.trim();
-    let m = t.match(/^(?:進化\s*)?([QWER])/);
-    let key = /^被動/.test(t) ? 'P' : (m ? m[1] : null);
-    if (!key && cid === 'Aphelios' && /^(通碧|赤月|熾焰)/.test(t)) key = 'P';
-    if (key) return `<span class="si"><img src="${RES(`assets/spell/${cid}_${key}.png`)}"><em>${key}</em></span>`;
-    const st = STAT.find(x => t.startsWith(x[0]) || t.startsWith('基礎' + x[0]));
-    if (st) return `<span class="si stat"><img src="${RES(`assets/stat/${st[1]}.png`)}"></span>`;
-    return `<span class="si none"></span>`;
-  };
-  const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
-  const deck = document.querySelector('deck-stage');
-  const add = (html, label) => {
-    const s = document.createElement('section');
-    s.setAttribute('data-label', label);
-    s.innerHTML = html; deck.appendChild(s);
-  };
-  const head = (kicker, title, right = '') => `
-    <header class="sh"><div><div class="kicker">${kicker}</div><h2>${title}</h2></div><div class="sh-r">${right}</div></header>`;
-  const legend = `<div class="legend">
-      <span><i class="dot b">▲</i>加強</span><span><i class="dot n">▼</i>削弱</span>
-      <span><i class="dot a">◆</i>有增有減</span><span><i class="dot x">✕</i>預覽撤回</span>
-      <span class="sep"></span>
-      <span><i class="ring t1"></i>第一優先</span><span><i class="ring t2"></i>第二優先</span><span><i class="ring t3"></i>第三優先</span>
-    </div>`;
-  const byTier = (a, b) => a.tier - b.tier;
 
-  // ─── 01 封面 ───
-  add(`
-    <div class="cover">
-      <div class="cover-img" style="background-image:url(${RES('assets/splash_cover.jpg')})"></div>
-      <div class="cover-fade"></div>
-      <div class="cover-body">
-        <div class="kicker">LEAGUE OF LEGENDS ・ PATCH DIGEST</div>
-        <h1><span class="num">26.16</span><span class="arrow">→</span><span class="num">26.20</span></h1>
-        <div class="cover-sub">五版本英雄數值改動總覽</div>
-        <div class="cover-stats">
-          <div><b>${C.length}</b><span>位英雄</span></div>
-          <div><b>${I.length}</b><span>項裝備／系統</span></div>
-          <div><b>5</b><span>個版本</span></div>
-        </div>
-        <ol class="cover-tl">
-          ${P.map(p => `<li class="${p.preview ? 'pv' : ''}"><div class="tl-v">26.${p.v}</div><div class="tl-d">${p.date}</div><div class="tl-t">${p.theme}</div></li>`).join('')}
-        </ol>
-      </div>
-    </div>`, '封面');
+  window.buildDeck = function (lang) {
+    lang = LANGS.includes(lang) ? lang : (localStorage.getItem(LKEY) || 'zh');
+    if (!LANGS.includes(lang)) lang = 'zh';
+    localStorage.setItem(LKEY, lang);
+    const li = LI[lang];
+    document.documentElement.lang = { zh: 'zh-Hant', en: 'en', ko: 'ko' }[lang];
+    document.body.className = 'lang-' + lang;
 
-  // ─── 02 一張圖總表 ───
-  const cell = (c, v) => {
-    const e = c.p[v];
-    return `<span class="cell ${e ? e.d : 'e'}">${e ? ARW[e.d] : ''}</span>`;
-  };
-  add(`
-    ${head('ONE-PAGE MATRIX', '全英雄 × 版本 一張圖', legend)}
-    <div class="matrix">
-      ${L.map(l => {
-        const list = C.filter(c => c.lane === l.k).sort(byTier);
-        return `<div class="mcol">
-          <div class="mhead"><span class="ln">${l.zh}<em>${l.en}</em></span>
-            <span class="vh">${VS.map(v => `<span>${v}</span>`).join('')}</span></div>
-          ${list.map(c => `<div class="mrow">
-            <img class="ic t${c.tier}" src="${img(c.id)}"><span class="mn">${c.n}</span>
-            <span class="cells">${VS.map(v => cell(c, v)).join('')}</span></div>`).join('')}
-        </div>`;
-      }).join('')}
-    </div>`, '一張圖總表');
+    const t = v => Array.isArray(v) ? (v[li] ?? v[0]) : v;
+    const u = k => t(UI[k]);
+    const tv = v => {
+      if (Array.isArray(v)) return t(v);
+      if (li === 0) return v;
+      let s = v; VAL.forEach(r => { s = s.split(r[0]).join(r[li]); });
+      return s.replace(/%(?=[A-Za-z가-힣])/g, '% ').replace(/\s{2,}/g, ' ').trim();
+    };
+    const RES = p => (window.__resources && window.__resources[p]) || p;
+    const P = window.PATCHES, L = window.LANES, C = window.CHAMPS, I = window.ITEMS;
+    const VS = P.map(p => p.v);
+    const laneName = k => { const l = L.find(x => x.k === k); return li === 0 ? l.zh : li === 1 ? l.en.charAt(0) + l.en.slice(1).toLowerCase() : l.ko; };
+    const img = id => RES(`assets/champ/${id}.png`);
+    const STAT = [[/^(魔防|MR|마저)/, 'mr'], [/^(物防|Armor|방어력|레벨당 방어력)/, 'armor'], [/^(攻速|AS)/, 'as'],
+      [/^(生命回復|Health regen|체력 재생)/, 'hp'], [/^(基礎)?(生命|Health|기본 체력|체력|레벨당 체력)/, 'hp'], [/^(基礎)?(魔力|Mana|Base mana|기본 마나|마나)/, 'mana'],
+      [/^(物攻|AD|공격력|레벨당 공격력)/, 'ad'], [/^Base health/, 'hp']];
+    const lineIcon = (cid, label) => {
+      const zh = Array.isArray(label) ? label[0] : label;
+      const s = zh.trim();
+      let m = s.match(/^(?:進化\s*)?([QWER])/);
+      let key = /^被動/.test(s) ? 'P' : (m ? m[1] : null);
+      if (!key && cid === 'Aphelios' && /^(通碧|赤月|熾焰)/.test(s)) key = 'P';
+      if (key && cid === 'Yunara' && key === 'W') return `<span class="si stat"><em style="position:static;background:none;font-size:20px">W</em></span>`;
+      if (key) return `<span class="si"><img src="${RES(`assets/spell/${cid}_${key}.png`)}"><em>${key}</em></span>`;
+      const st = STAT.find(x => x[0].test(s));
+      if (st) return `<span class="si stat"><img src="${RES(`assets/stat/${st[1]}.png`)}"></span>`;
+      return `<span class="si none"></span>`;
+    };
+    const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
+    const deck = document.querySelector('deck-stage');
+    const keepIdx = typeof deck.index === 'number' && deck.children.length ? deck.index : null;
+    deck.innerHTML = '';
+    const add = (html, label) => {
+      const s = document.createElement('section');
+      s.setAttribute('data-label', label);
+      s.innerHTML = html; deck.appendChild(s);
+    };
+    const head = (kicker, title, right = '') => `
+      <header class="sh"><div><div class="kicker">${kicker}</div><h2>${title}</h2></div><div class="sh-r">${right}</div></header>`;
+    const legendDir = `<span><i class="dot b">▲</i>${u('b')}</span><span><i class="dot n">▼</i>${u('n')}</span><span><i class="dot a">◆</i>${u('amix')}</span>`;
+    const legend = `<div class="legend">${legendDir}<span class="sep"></span>
+        <span><i class="ring t1"></i>${u('t1')}</span><span><i class="ring t2"></i>${u('t2')}</span><span><i class="ring t3"></i>${u('t3')}</span></div>`;
+    const byTier = (a, b) => a.tier - b.tier;
 
-  // ─── 03 統計 ───
-  const cnt = (v, d) => C.filter(c => c.p[v] && c.p[v].d === d).length;
-  const pStats = P.map(p => ({ p, b: cnt(p.v, 'b'), n: cnt(p.v, 'n'), a: cnt(p.v, 'a'), x: cnt(p.v, 'x') }));
-  const maxT = Math.max(...pStats.map(s => s.b + s.n + s.a + s.x));
-  const laneStats = L.map(l => {
-    const cs = C.filter(c => c.lane === l.k); let b = 0, n = 0, a = 0;
-    cs.forEach(c => Object.values(c.p).forEach(e => { if (e.d === 'b') b++; else if (e.d === 'n') n++; else if (e.d === 'a') a++; }));
-    return { l, b, n, a, c: cs.length };
-  });
-  const maxL = Math.max(...laneStats.map(s => s.b + s.n + s.a));
-  const multi = C.filter(c => Object.keys(c.p).length >= 2).sort((a, b) => Object.keys(b.p).length - Object.keys(a.p).length || a.tier - b.tier);
-  const totB = pStats.reduce((s, x) => s + x.b, 0), totN = pStats.reduce((s, x) => s + x.n, 0), totA = pStats.reduce((s, x) => s + x.a, 0);
-  const bar = (s, max, w) => ['b', 'a', 'n', 'x'].map(k => s[k] ? `<span class="seg ${k}" style="width:${s[k] / max * w}px">${s[k]}</span>` : '').join('');
-  add(`
-    ${head('STATISTICS', '改動統計', legend.replace(/<span class="sep">[\s\S]*$/, '</div>'))}
-    <div class="stats">
-      <div class="panel p-patch">
-        <h3>各版本英雄改動數</h3>
-        ${pStats.map(s => `<div class="brow"><span class="bl">26.${s.p.v}${s.p.preview ? '<em>預覽</em>' : ''}</span>
-          <span class="bar">${bar(s, maxT, 760)}</span><span class="bt">${s.b + s.n + s.a + s.x}</span></div>`).join('')}
-        <h3 style="margin-top:56px">各路線改動次數</h3>
-        ${laneStats.map(s => `<div class="brow"><span class="bl">${s.l.zh}</span>
-          <span class="bar">${bar(s, maxL, 760)}</span><span class="bt">${s.b + s.n + s.a}</span></div>`).join('')}
-      </div>
-      <div class="panel p-side">
-        <div class="donut-wrap">
-          <div class="donut" style="--b:${totB / (totB + totN + totA) * 100}%;--a:${(totB + totA) / (totB + totN + totA) * 100}%"></div>
-          <div class="donut-c"><b>${totB + totN + totA}</b><span>次英雄改動</span></div>
-        </div>
-        <div class="tot"><span class="b">▲ 加強 <b>${totB}</b></span><span class="a">◆ 調整 <b>${totA}</b></span><span class="n">▼ 削弱 <b>${totN}</b></span></div>
-        <h3>跨版本連續調整</h3>
-        <div class="multi">${multi.map(c => `<div class="mu">
-          <img class="ic t${c.tier}" src="${img(c.id)}"><span class="mn">${c.n}</span>
-          <span class="cells">${VS.map(v => cell(c, v)).join('')}</span></div>`).join('')}</div>
-      </div>
-    </div>`, '統計');
-
-  // ─── 詳細卡片 ───
-  const card = (c, big) => `
-    <div class="card t${c.tier}${big ? ' big' : ''}">
-      <div class="ch"><img class="ic t${c.tier}" src="${img(c.id)}">
-        <div class="cn"><b>${c.n}</b><span>${c.tag || L.find(l => l.k === c.lane).zh}・${TIERZ[c.tier]}</span></div></div>
-      ${Object.keys(c.p).sort().map(v => {
-        const e = c.p[v];
-        return `<div class="pb"><div class="pt ${e.d}"><span>26.${v}</span>${ARW[e.d]} ${DZ[e.d]}${v === '20' ? '<em>預覽</em>' : ''}</div>
-          ${e.l.map(x => `<div class="ln2">${lineIcon(c.id, x[0])}<span class="k">${esc(x[0])}</span><span class="vv"><s>${esc(x[1])}</s><i>⇒</i><b class="${x[3]}">${esc(x[2])}</b></span></div>`).join('')}
-        </div>`;
-      }).join('')}
-    </div>`;
-  const units = c => 1.7 + Object.values(c.p).reduce((s, e) => s + 0.9 + e.l.length * 1.15, 0);
-
-  // ─── 量測式分頁：實際量卡片高度後分欄 ───
-  const SAFE = 1;
-  const measure = (htmls, w) => {
-    const box = document.createElement('div');
-    box.style.cssText = 'position:absolute;left:-99999px;top:0;width:' + w + 'px';
-    box.innerHTML = htmls.join('');
-    document.body.appendChild(box);
-    const hs = [...box.children].map(el => el.getBoundingClientRect().height + 18);
-    box.remove(); return hs;
-  };
-  const pack = (list, big, ncol, colH) => {
-    const W = (1792 - 24 * (ncol - 1)) / ncol;
-    const htmls = list.map(c => card(c, big));
-    const hs = measure(htmls, W);
-    const pages = []; let cols = [[]], h = 0;
-    htmls.forEach((x, i) => {
-      if (h + hs[i] > colH * SAFE && cols[cols.length - 1].length) {
-        if (cols.length === ncol) { pages.push(cols); cols = [[]]; } else cols.push([]);
-        h = 0;
-      }
-      cols[cols.length - 1].push({ x, c: list[i] }); h += hs[i];
-    });
-    pages.push(cols); return pages;
-  };
-  const COLH = 1080 - 104 - 158;
-  const renderPages = (pages, ncol, kick, title, label) => pages.forEach((cols, i) => {
-    const cs = cols.flat().map(o => o.c);
+    // ─── 01 封面 ───
     add(`
-      ${head(kick + (pages.length > 1 ? ` ・ ${i + 1}/${pages.length}` : ''), title,
-        `<div class="t1strip${ncol === 4 ? '' : ' sm'}">${cs.map(c => `<img class="ic t${c.tier}" src="${img(c.id)}">`).join('')}</div>`)}
-      <div class="cols" style="grid-template-columns:repeat(${ncol},1fr)">${cols.map(col => `<div class="col">${col.map(o => o.x).join('')}</div>`).join('')}</div>`,
-      label + (pages.length > 1 ? ' ' + (i + 1) : ''));
-  });
+      <div class="cover">
+        <div class="cover-img" style="background-image:url(${RES('assets/splash_cover.jpg')})"></div>
+        <div class="cover-fade"></div>
+        <div class="cover-body">
+          <div class="kicker">${u('kickerCover')}</div>
+          <h1><span class="num">26.16</span><span class="arrow">→</span><span class="num">26.20</span></h1>
+          <div class="cover-sub">${u('coverSub')}</div>
+          <div class="cover-stats">
+            <div><b>${C.length}</b><span>${u('champs')}</span></div>
+            <div><b>${I.length}</b><span>${u('items')}</span></div>
+            <div><b>5</b><span>${u('patches')}</span></div>
+          </div>
+          <ol class="cover-tl">
+            ${P.map(p => `<li class="${p.worlds ? 'wd' : ''}"><div class="tl-v">26.${p.v}${p.worlds ? `<em>${u('worlds')}</em>` : ''}</div><div class="tl-d">${p.date}</div><div class="tl-t">${t(p.theme)}</div></li>`).join('')}
+          </ol>
+        </div>
+      </div>`, u('cover'));
 
-  // ─── 04 第一優先 ───
-  const t1 = C.filter(c => c.tier === 1);
-  renderPages(pack(t1, true, 4, COLH), 4, 'WORLDS PRIORITY', '第一優先・世界賽 BP 核心角色', '第一優先');
+    // ─── 02 一張圖總表 ───
+    const cell = (c, v) => { const e = c.p[v]; return `<span class="cell ${e ? e.d : 'e'}">${e ? ARW[e.d] : ''}</span>`; };
+    const sub = l => li === 1 ? '' : `<em>${l.en}</em>`;
+    add(`
+      ${head(UI.matrixK, u('matrix'), legend)}
+      <div class="matrix">
+        ${L.map(l => {
+          const list = C.filter(c => c.lane === l.k).sort(byTier);
+          return `<div class="mcol">
+            <div class="mhead"><span class="ln">${laneName(l.k)}${sub(l)}</span>
+              <span class="vh">${VS.map(v => `<span>${v}</span>`).join('')}</span></div>
+            ${list.map(c => `<div class="mrow">
+              <img class="ic t${c.tier}" src="${img(c.id)}"><span class="mn">${t(c.n)}</span>
+              <span class="cells">${VS.map(v => cell(c, v)).join('')}</span></div>`).join('')}
+          </div>`;
+        }).join('')}
+      </div>`, u('matrixL'));
 
-  // ─── 各路線 ───
-  L.forEach(l => {
-    const list = C.filter(c => c.lane === l.k).sort(byTier);
-    renderPages(pack(list, false, 3, COLH), 3, `${l.en} LANE`, `${l.zh}・逐版本數值`, l.zh);
-  });
+    // ─── 03 統計 ───
+    const cnt = (v, d) => C.filter(c => c.p[v] && c.p[v].d === d).length;
+    const pStats = P.map(p => ({ p, b: cnt(p.v, 'b'), n: cnt(p.v, 'n'), a: cnt(p.v, 'a') }));
+    const maxT = Math.max(...pStats.map(s => s.b + s.n + s.a));
+    const laneStats = L.map(l => {
+      let b = 0, n = 0, a = 0;
+      C.filter(c => c.lane === l.k).forEach(c => Object.values(c.p).forEach(e => { if (e.d === 'b') b++; else if (e.d === 'n') n++; else a++; }));
+      return { l, b, n, a };
+    });
+    const maxL = Math.max(...laneStats.map(s => s.b + s.n + s.a));
+    const multi = C.filter(c => Object.keys(c.p).length >= 2).sort((a, b) => Object.keys(b.p).length - Object.keys(a.p).length || a.tier - b.tier);
+    const totB = pStats.reduce((s, x) => s + x.b, 0), totN = pStats.reduce((s, x) => s + x.n, 0), totA = pStats.reduce((s, x) => s + x.a, 0);
+    const tot = totB + totN + totA;
+    const bar = (s, max, w) => ['b', 'a', 'n'].map(k => s[k] ? `<span class="seg ${k}" style="width:${s[k] / max * w}px">${s[k]}</span>` : '').join('');
+    add(`
+      ${head(UI.statsK, u('stats'), `<div class="legend">${legendDir}</div>`)}
+      <div class="stats">
+        <div class="panel p-patch">
+          <h3>${u('perPatch')}</h3>
+          ${pStats.map(s => `<div class="brow"><span class="bl">26.${s.p.v}${s.p.worlds ? `<em>${u('worlds')}</em>` : ''}</span>
+            <span class="bar">${bar(s, maxT, 720)}</span><span class="bt">${s.b + s.n + s.a}</span></div>`).join('')}
+          <h3 style="margin-top:56px">${u('perLane')}</h3>
+          ${laneStats.map(s => `<div class="brow"><span class="bl lane">${laneName(s.l.k)}</span>
+            <span class="bar">${bar(s, maxL, 720)}</span><span class="bt">${s.b + s.n + s.a}</span></div>`).join('')}
+        </div>
+        <div class="panel p-side">
+          <div class="donut-wrap">
+            <div class="donut" style="--b:${totB / tot * 100}%;--a:${(totB + totA) / tot * 100}%"></div>
+            <div class="donut-c"><b>${tot}</b><span>${u('totalChanges')}</span></div>
+          </div>
+          <div class="tot"><span class="b">▲ ${u('b')} <b>${totB}</b></span><span class="a">◆ ${u('a')} <b>${totA}</b></span><span class="n">▼ ${u('n')} <b>${totN}</b></span></div>
+          <h3>${u('multi')}</h3>
+          <div class="multi">${multi.map(c => `<div class="mu">
+            <img class="ic t${c.tier}" src="${img(c.id)}"><span class="mn">${t(c.n)}</span>
+            <span class="cells">${VS.map(v => cell(c, v)).join('')}</span></div>`).join('')}</div>
+        </div>
+      </div>`, u('statsL'));
 
-  // ─── 裝備 / 系統 ───
-  add(`
-    ${head('ITEMS & SYSTEMS', '裝備・符文・系統')}
-    <div class="items">
-      ${P.map(p => {
-        const its = I.filter(x => x.v === p.v);
-        return `<div class="icol${its.length > 6 ? ' wide' : ''}"><div class="ih ${p.preview ? 'pv' : ''}"><b>26.${p.v}</b><span>${p.date}${p.preview ? '・預覽' : ''}</span></div>
-          <div class="ilist">${its.map(x => `<div class="it ${x.d}"><img class="iti" src="${RES(x.img)}"><div class="itb"><div class="itn"><i>${ARW[x.d]}</i>${x.n}</div><div class="itl">${esc(x.l)}</div></div></div>`).join('')}</div>
-        </div>`;
-      }).join('')}
-    </div>
-    <footer class="src">資料來源：英雄聯盟官方 26.16–26.19 中文版本更新公告；26.20 為 Riot 官方預覽（Dot Esports 彙整），10/7 上線前數值可能微調。法洛士、賽勒斯之改動已自 26.20 撤回。</footer>`, '裝備系統');
-};
+    // ─── 詳細卡片 ───
+    const tagTxt = c => c.tag ? c.tag.map(laneName).join(' / ') : laneName(c.lane);
+    const card = (c, big) => `
+      <div class="card t${c.tier}${big ? ' big' : ''}">
+        <div class="ch"><img class="ic t${c.tier}" src="${img(c.id)}">
+          <div class="cn"><b>${t(c.n)}</b><span>${tagTxt(c)}・${u('t' + c.tier)}</span></div></div>
+        ${Object.keys(c.p).sort().map(v => {
+          const e = c.p[v];
+          return `<div class="pb"><div class="pt ${e.d}"><span>26.${v}</span>${ARW[e.d]} ${u(e.d)}${v === '20' ? `<em>${u('worlds')}</em>` : ''}</div>
+            ${e.l.map(x => `<div class="ln2">${lineIcon(c.id, x[0])}<span class="k">${esc(t(x[0]))}</span><span class="vv"><s>${esc(tv(x[1]))}</s><i>⇒</i><b class="${x[3]}">${esc(tv(x[2]))}</b></span></div>`).join('')}
+          </div>`;
+        }).join('')}
+      </div>`;
+
+    // 量測式分頁
+    const measure = (htmls, w) => {
+      const box = document.createElement('div');
+      box.style.cssText = 'position:absolute;left:-99999px;top:0;width:' + w + 'px';
+      box.innerHTML = htmls.join('');
+      document.body.appendChild(box);
+      const hs = [...box.children].map(el => el.getBoundingClientRect().height + 18);
+      box.remove(); return hs;
+    };
+    const pack = (list, big, ncol, colH) => {
+      const W = (1792 - 24 * (ncol - 1)) / ncol;
+      const htmls = list.map(c => card(c, big));
+      const hs = measure(htmls, W);
+      const pages = []; let cols = [[]], h = 0;
+      htmls.forEach((x, i) => {
+        if (h + hs[i] > colH && cols[cols.length - 1].length) {
+          if (cols.length === ncol) { pages.push(cols); cols = [[]]; } else cols.push([]);
+          h = 0;
+        }
+        cols[cols.length - 1].push({ x, c: list[i] }); h += hs[i];
+      });
+      pages.push(cols); return pages;
+    };
+    const COLH = 1080 - 104 - 158;
+    const renderPages = (pages, ncol, kick, title, label) => pages.forEach((cols, i) => {
+      const cs = cols.flat().map(o => o.c);
+      add(`
+        ${head(kick + (pages.length > 1 ? ` ・ ${i + 1}/${pages.length}` : ''), title,
+          `<div class="t1strip${ncol === 4 ? '' : ' sm'}">${cs.map(c => `<img class="ic t${c.tier}" src="${img(c.id)}">`).join('')}</div>`)}
+        <div class="cols" style="grid-template-columns:repeat(${ncol},1fr)">${cols.map(col => `<div class="col">${col.map(o => o.x).join('')}</div>`).join('')}</div>`,
+        label + (pages.length > 1 ? ' ' + (i + 1) : ''));
+    });
+
+    renderPages(pack(C.filter(c => c.tier === 1), true, 4, COLH), 4, UI.t1K, u('t1T'), u('t1'));
+    L.forEach(l => {
+      const list = C.filter(c => c.lane === l.k).sort(byTier);
+      renderPages(pack(list, false, 3, COLH), 3, `${l.en} LANE`, laneName(l.k) + u('laneT'), laneName(l.k));
+    });
+
+    // ─── 裝備 / 系統 ───
+    add(`
+      ${head(UI.itemsK, u('itemsT'))}
+      <div class="items">
+        ${P.map(p => {
+          const its = I.filter(x => x.v === p.v);
+          return `<div class="icol${its.length > 6 ? ' wide' : ''}"><div class="ih ${p.worlds ? 'wd' : ''}"><b>26.${p.v}</b><span>${p.date}${p.worlds ? '・' + u('worlds') : ''}</span></div>
+            <div class="ilist">${its.map(x => `<div class="it ${x.d}">${x.img ? `<img class="iti" src="${RES(x.img)}">` : `<span class="iti glyph">${x.glyph}</span>`}<div class="itb"><div class="itn"><i>${ARW[x.d]}</i>${t(x.n)}</div><div class="itl">${esc(t(x.l))}</div></div></div>`).join('')}</div>
+          </div>`;
+        }).join('')}
+      </div>
+      <footer class="src">${u('src')}</footer>`, u('itemsL'));
+
+    // 語言切換列
+    let sw = document.getElementById('lang-switch');
+    if (!sw) {
+      sw = document.createElement('div'); sw.id = 'lang-switch';
+      sw.innerHTML = [['zh', '中文'], ['en', 'EN'], ['ko', '한국어']].map(([k, n]) => `<button data-l="${k}">${n}</button>`).join('');
+      sw.addEventListener('click', e => { const b = e.target.closest('button'); if (b && b.dataset.l !== localStorage.getItem(LKEY)) window.buildDeck(b.dataset.l); });
+      document.body.appendChild(sw);
+    }
+    sw.querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.l === lang));
+
+    if (keepIdx != null) setTimeout(() => { if (deck.goTo) deck.goTo(Math.min(keepIdx, deck.length - 1)); }, 30);
+  };
+})();
 </script>
 <script>
 
@@ -2574,5 +2670,6 @@ window.ITEMS = [
 <script>
 (function go(){ if (!document.fonts) return window.buildDeck(); document.fonts.ready.then(() => window.buildDeck()); })();
 </script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v31edd6df95cf4e85bb4c19e7a9bdbcba1788362987495" integrity="sha512-iIg7k2xntmwu6/uSb5tpc/hySgZc4eoL31yB29W6tJFo2akwjPWcEqnCEdJvGexCL0KEQwVYv5BlowfhVz26hg==" data-cf-beacon='{"version":"2024.11.0","token":"4edd5f8ec12a48cfa682ab8261b80a79","spa":2}' crossorigin="anonymous"></script>
 </body>
 </html>
